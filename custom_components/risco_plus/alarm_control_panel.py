@@ -48,6 +48,7 @@ from .const import (
     CONF_CODE_DISARM_REQUIRED,
     CONF_CUSTOM_CODE,
     CONF_GROUP_NAMES,
+    CONF_NOTIFY,
     CONF_HA_STATES_TO_RISCO,
     CONF_PERIMETER_ZONES,
     CONF_RISCO_STATES_TO_HA,
@@ -291,6 +292,7 @@ class RiscoAlarm(AlarmControlPanelEntity):
         }
         self._group_names = parse_group_names(options.get(CONF_GROUP_NAMES) or "")
         self._open_zones_mode = open_zones_mode(options)
+        self._notifications = bool(options.get(CONF_NOTIFY))
         arm_required = options[CONF_CODE_ARM_REQUIRED]
         # a custom code always protects disarming
         disarm_required = options[CONF_CODE_DISARM_REQUIRED] or bool(self._custom_code)
@@ -416,10 +418,12 @@ class RiscoAlarm(AlarmControlPanelEntity):
     def _notify(
         self, event: str, texts: dict[str, tuple[str, str]], names: list[str], kind: str
     ) -> None:
-        """Event (for phone notifications) + Home Assistant notification."""
+        """Event (for your own automations) + optional Home Assistant notification."""
         if self.hass is None:
             return
         self.hass.bus.async_fire(event, {"entity_id": self.entity_id, "zones": names})
+        if not self._notifications:
+            return
         title, message = texts.get((self.hass.config.language or "en")[:2], texts["en"])
         persistent_notification.async_create(
             self.hass,

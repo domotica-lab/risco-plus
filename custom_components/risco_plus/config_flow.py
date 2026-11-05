@@ -43,6 +43,7 @@ from .const import (
     CONF_AUTO_BYPASS,
     CONF_GROUP_ZONES,
     CONF_MIGRATED_FROM,
+    CONF_NOTIFY,
     CORE_DOMAIN,
     CONF_OPEN_ZONES_MODE,
     CONF_ZONE_GROUPS_SECTION,
@@ -374,6 +375,10 @@ class RiscoOptionsFlowHandler(OptionsFlow):
                                     mode=SelectSelectorMode.LIST,
                                 )
                             ),
+                            probatio.Required(
+                                CONF_NOTIFY,
+                                default=self._data[CONF_NOTIFY],
+                            ): BooleanSelector(),
                             probatio.Optional(
                                 CONF_PERIMETER_ZONES,
                                 default=[

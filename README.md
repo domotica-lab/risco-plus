@@ -10,7 +10,7 @@ usavi, ne copia account, opzioni e nomi delle entità.
 
 > **English:** Risco alarm integration for Home Assistant focused on groups A-D: arm several
 > groups at once, map Home Assistant modes to group combinations (e.g. Night = B + C), refuse
-> or bypass open zones with notifications, per-group entities, custom code and a bundled
+> or bypass open zones (with events for your automations), per-group entities, custom code and a bundled
 > dashboard card. It can take over an existing Risco integration keeping entity ids.
 > UI in English and Italian.
 
@@ -82,13 +82,15 @@ usavi, ne copia account, opzioni e nomi delle entità.
     - *Non controllare*: come l'integrazione di serie (predefinito).
     - *Non inserire e avvisa, se è aperta una zona dei gruppi da inserire*: **non serve
       scegliere nessuna zona**, vengono controllate tutte quelle dei gruppi che stai
-      inserendo (con Totale tutte). Arriva una notifica con le zone aperte.
+      inserendo (con Totale tutte). Sulla scheda compare il messaggio con le zone aperte.
     - *Non inserire e avvisa, solo per le zone scelte sotto*: controlla solo le zone scelte.
     - *Escludi le zone aperte e inserisci*: come l'app iRISCO. Esclude le zone aperte dei
-      gruppi, inserisce e manda una notifica con l'elenco; le zone scelte sotto bloccano
+      gruppi e inserisce; le zone scelte sotto bloccano
       comunque. L'esclusione dura fino al disinserimento.
     Per avvisi sul telefono ci sono gli eventi `risco_arming_refused` e
-    `risco_zones_bypassed` (dati: `entity_id`, `zones`).
+    `risco_zones_bypassed` (dati: `entity_id`, `zones`), da usare nelle tue automazioni.
+  - **Mostra anche una notifica in Home Assistant**: spenta di serie. Se la accendi, oltre al
+    messaggio sulla scheda compare una notifica nel pannello di Home Assistant.
   - **Zone scelte**: servono solo alle ultime due scelte qui sopra.
 - **Zone dei gruppi** (sezione a parte): con Risco Cloud la centrale di solito non comunica
   a quali gruppi appartiene una zona. Per ogni gruppo scegli le sue zone dall'elenco, così
@@ -172,7 +174,7 @@ I test sono quelli dell'integrazione di serie (adattati) più quelli delle funzi
 pip install pytest-homeassistant-custom-component "pyrisco>=0.8.1"
 pytest
 ```
-Provati con Home Assistant 2026.2.3 e Python 3.13 (ambiente di test disponibile): 62 test
+Provati con Home Assistant 2026.2.3 e Python 3.13 (ambiente di test disponibile): 63 test
 superati. Su un Home Assistant 2026.10 reale la prova va fatta installando l'integrazione.
 
 ## Icona

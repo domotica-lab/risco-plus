@@ -135,6 +135,7 @@
               "group_names": "Nomi dei gruppi (una riga per gruppo, es. \"B: Balconi\")",
               "group_entities": "Crea un'entità per ogni gruppo (sensore inserito e pulsante inserisci)",
               "open_zones_mode": "Con zone aperte all'inserimento",
+              "persistent_notifications": "Mostra anche una notifica in Home Assistant",
               "perimeter_zones": "Zone scelte",
               "read_from_cloud_cache": "Leggi lo stato dalla copia di Risco Cloud (per moduli IP vecchi)"
             },
@@ -143,6 +144,7 @@
               "group_names": "Compaiono nella scheda e nelle entità dei gruppi. I gruppi senza nome restano con la lettera.",
               "group_entities": "Per ogni partizione: sensori \"Gruppo B inserito\" e pulsanti \"Inserisci gruppo B\", comodi per automazioni e assistenti vocali.",
               "open_zones_mode": "Cosa fare se una zona è aperta quando si inserisce da Home Assistant (scheda, pannello allarme, automazioni, voce).",
+              "persistent_notifications": "Il messaggio sulla scheda compare comunque. Gli eventi risco_arming_refused e risco_zones_bypassed partono sempre, per le tue automazioni.",
               "perimeter_zones": "Servono solo per le ultime due scelte qui sopra. Con \"Non inserire e avvisa, se è aperta una zona dei gruppi\" non serve sceglierle: vengono controllate tutte.",
               "read_from_cloud_cache": "Home Assistant smette di interrogare la centrale a ogni aggiornamento. Usalo se l'app iRISCO dà errori di connessione mentre Home Assistant è acceso."
             }

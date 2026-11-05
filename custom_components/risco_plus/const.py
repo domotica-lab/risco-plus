@@ -86,6 +86,9 @@ CONF_GROUP_NAMES = "group_names"
 CONF_GROUP_ENTITIES = "group_entities"
 # Vecchia opzione (sostituita da CONF_OPEN_ZONES_MODE = "bypass"), letta ancora.
 CONF_AUTO_BYPASS = "auto_bypass_open_zones"
+# Notifica di Home Assistant quando l'inserimento e' rifiutato o si escludono zone
+# (spenta: basta il messaggio della scheda; gli eventi partono sempre)
+CONF_NOTIFY = "persistent_notifications"
 # Cosa fare con le zone aperte quando si inserisce da Home Assistant
 CONF_OPEN_ZONES_MODE = "open_zones_mode"
 OPEN_ZONES_OFF = "off"  # non controllare (come l'integrazione di serie)
@@ -110,6 +113,7 @@ DEFAULT_EXTRA_OPTIONS = {
     CONF_ZONE_GROUPS: "",
     CONF_AUTO_BYPASS: False,
     CONF_CLOUD_CACHE: False,
+    CONF_NOTIFY: False,
     **{key: [] for key in CONF_GROUP_ZONES.values()},
 }
 

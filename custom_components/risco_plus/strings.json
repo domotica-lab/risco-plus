@@ -135,6 +135,7 @@
               "group_names": "Group names (one line per group, e.g. \"B: Balconies\")",
               "group_entities": "Create an entity for every group (armed sensor and arm button)",
               "open_zones_mode": "When zones are open at arming",
+              "persistent_notifications": "Also show a Home Assistant notification",
               "perimeter_zones": "Zones chosen",
               "read_from_cloud_cache": "Read state from the Risco Cloud copy (for old IP modules)"
             },
@@ -143,6 +144,7 @@
               "group_names": "Shown on the card and in the group entities. Groups without a name keep their letter.",
               "group_entities": "For each partition: \"Group B armed\" sensors and \"Arm group B\" buttons, handy for automations and voice assistants.",
               "open_zones_mode": "What to do when a zone is open while arming from Home Assistant (card, alarm panel, automations, voice).",
+              "persistent_notifications": "The message on the card is shown anyway. The events risco_arming_refused and risco_zones_bypassed are always sent, for your own automations.",
               "perimeter_zones": "Used only by the last two choices above. Not needed for \"Don't arm and notify, if a zone of the groups...\": every zone is checked.",
               "read_from_cloud_cache": "Home Assistant stops querying the panel on every update. Use it if the iRISCO app shows connection errors while Home Assistant is running."
             }

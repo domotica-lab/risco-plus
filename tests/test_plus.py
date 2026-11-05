@@ -670,6 +670,7 @@ def test_open_zones_mode_from_old_options() -> None:
             "open_zones_mode": "block",
             "zones_group_a": ["2"],
             "zones_group_c": ["1"],
+            "persistent_notifications": True,
         }
     ],
 )
@@ -708,3 +709,20 @@ async def test_block_any_open_zone(hass: HomeAssistant, panel, setup_risco_cloud
             )
         assert group_arm.await_count == 1
         panel["zones"][1].bypass.assert_not_called()
+
+
+
+@pytest.mark.parametrize("options", [{"open_zones_mode": "block"}])
+async def test_no_notification_by_default(
+    hass: HomeAssistant, panel, setup_risco_cloud
+) -> None:
+    """By default only the card message (the error) and the event: no notification."""
+    panel["zones"][1].triggered = True
+    events = []
+    hass.bus.async_listen("risco_arming_refused", events.append)
+    with patch("custom_components.risco_plus.RiscoCloud.arm", return_value=panel["alarm"]):
+        with pytest.raises(HomeAssistantError):
+            await _call(hass, SERVICE_ALARM_ARM_AWAY)
+    await hass.async_block_till_done()
+    assert events[-1].data["zones"] == ["Kitchen window"]
+    assert not hass.data.get("persistent_notification")

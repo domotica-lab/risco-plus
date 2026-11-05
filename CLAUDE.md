@@ -50,8 +50,8 @@ opzioni sono ancora lette. Manifest: `version` 1.0.0 (semver), `codeowners`/`doc
   - `open_zones_mode` (off / block = tutte le zone dei gruppi / block_selected = solo
     `perimeter_zones` / bypass = esclude le altre), `open_zones_mode()` in const legge anche
     le vecchie opzioni (`perimeter_zones` -> block_selected, `auto_bypass_open_zones` ->
-    bypass). Rifiuto -> notifica + evento `risco_arming_refused`; esclusione -> notifica +
-    `risco_zones_bypassed`. Sezione `zone_groups_section`: `zones_group_a..d` (id zona per
+    bypass). Rifiuto -> evento `risco_arming_refused`; esclusione -> evento
+    `risco_zones_bypassed`; notifica di HA solo con l'opzione `persistent_notifications` (spenta: basta il messaggio della scheda, l'utente fa le sue notifiche). Sezione `zone_groups_section`: `zones_group_a..d` (id zona per
     gruppo, chiavi "#id" nella mappa di `zone_groups`) + vecchio testo `zone_groups`. Codice errato -> `ServiceValidationError`
     (`invalid_code`), i test di serie sono adattati.
 - `custom_components/risco_plus/frontend/risco-plus-card.js` - scheda Lovelace (vanilla JS, shadow DOM, **solo ASCII**,
@@ -60,7 +60,7 @@ opzioni sono ancora lette. Manifest: `version` 1.0.0 (semver), `codeowners`/`doc
   ORIGINALE di HA (`loadCardHelpers().showEnterCodeDialog`); il tastierino interno e' solo
   riserva: non ridisegnarlo a mano, deve restare identico all'originale.
 - `tests/` - test core adattati + `test_plus.py`. `tests/shim/probatio.py` si usa solo se
-  `probatio` manca (ambienti HA < 2026.10). Eseguire: `pytest` (62 test).
+  `probatio` manca (ambienti HA < 2026.10). Eseguire: `pytest` (63 test).
 - `esempi/` - scheda e automazione di controllo (attributo `armed_groups`).
 
 ## Cose imparate sul campo (centrale LightSYS 2 con modulo IP RW132IP del 2013)
