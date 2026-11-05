@@ -8,7 +8,7 @@ ID o IP di impianti reali: il progetto e' pensato per essere condiviso.
 Integrazione **separata** `risco_plus` (da pubblicare su GitHub/HACS), nata dalla copia
 dell'integrazione core `risco` di **HA 2026.10.2** (`pyrisco==0.8.1`) con funzioni aggiuntive,
 tutte opzionali. Fino alla 2026.10.2.4 era un override del dominio `risco`: le vecchie
-opzioni sono ancora lette. Manifest: `version` semver (oggi 1.0.2), `codeowners`/`documentation`/
+opzioni sono ancora lette. Manifest: `version` semver (oggi 1.0.3), `codeowners`/`documentation`/
 `issue_tracker` con l'utente GitHub `domotica-lab`.
 - `migrate.py` + passo `migrate` del config flow: copia dati/opzioni di una entry `risco`
   (`CONF_MIGRATED_FROM` nei data), al primo avvio disattiva la vecchia entry e sposta
@@ -88,4 +88,4 @@ opzioni sono ancora lette. Manifest: `version` semver (oggi 1.0.2), `codeowners`
 ## Da fare / idee
 - Verificare sul campo che la copia del cloud segni i sensori aperti (blocco zone).
 - Notifica quando una zona viene esclusa all'inserimento da app iRISCO (quella da HA c'e' gia').
-- Repository: github.com/domotica-lab/risco-plus. Icona originale in `custom_components/risco_plus/brand/` (icon.png 256, icon@2x.png 512; HA 2026.3+ la legge da li'). Non usare il logo Risco (marchio).
+- Repository: github.com/domotica-lab/risco-plus. Icona e logo originali in `custom_components/risco_plus/brand/` (icon 256/512, logo e dark_logo 337x128 e @2x 674x256; HA 2026.3+ li legge da li'), stesso stile di domotica-lab/hikvision_axpro_cloud: fondo #293243->#1b2231, scudo bianco, dettaglio rosso #d92d27 (qui 4 quadratini = gruppi, due tonalita'). Non usare il logo Risco (marchio).

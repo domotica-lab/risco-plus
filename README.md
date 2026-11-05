@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="custom_components/risco_plus/brand/dark_logo@2x.png">
+    <img alt="Risco Plus" src="custom_components/risco_plus/brand/logo@2x.png" height="96">
+  </picture>
+</p>
+
 # Risco Plus per Home Assistant
 
 [![Apri in HACS / Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=domotica-lab&repository=risco-plus&category=integration)
@@ -196,7 +203,8 @@ superati. Su un Home Assistant 2026.10 reale la prova va fatta installando l'int
 
 ## Icona
 
-L'icona (`custom_components/risco_plus/brand/`) è originale: uno scudo con i gruppi A-D.
+Icona e logo (`custom_components/risco_plus/brand/`) sono originali: uno scudo con i quattro
+gruppi A-D, nello stile delle integrazioni di domotica-lab.
 Home Assistant (dalla 2026.3) la mostra da sola. Risco è un marchio di Risco Group: questa
 integrazione non è prodotta né approvata da Risco Group.
 
