@@ -1,5 +1,12 @@
 # Risco Plus per Home Assistant
 
+[![Apri in HACS / Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=domotica-lab&repository=risco-plus&category=integration)
+[![Aggiungi l'integrazione](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=risco_plus)
+
+[![Versione](https://img.shields.io/github/v/release/domotica-lab/risco-plus)](https://github.com/domotica-lab/risco-plus/releases)
+[![HACS](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz)
+[![Validate](https://github.com/domotica-lab/risco-plus/actions/workflows/validate.yml/badge.svg)](https://github.com/domotica-lab/risco-plus/actions/workflows/validate.yml)
+
 Integrazione per le centrali di allarme **Risco** (Risco Cloud o collegamento locale),
 pensata per chi usa i **gruppi A-D**. Parte dall'integrazione Risco di Home Assistant
 (2026.10.2, pyrisco 0.8.1) e aggiunge inserimento di più gruppi, modalità con più gruppi,
@@ -33,10 +40,20 @@ usavi, ne copia account, opzioni e nomi delle entità.
 
 ## Installazione
 
-**Con HACS (consigliato)**
+**Con i pulsanti (il modo più veloce)**
+1. Premi [![Apri in HACS / Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=domotica-lab&repository=risco-plus&category=integration)
+   e conferma l'indirizzo del tuo Home Assistant: si apre Risco Plus nel Marketplace/HACS.
+   Premi **Scarica** e riavvia Home Assistant.
+2. Premi [![Aggiungi l'integrazione](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=risco_plus)
+   per aggiungere l'integrazione.
+
+La prima volta il sito *my.home-assistant.io* chiede l'indirizzo del tuo Home Assistant
+(es. `http://homeassistant.local:8123`): lo ricorda per le volte successive.
+
+**Con il Marketplace/HACS, senza pulsanti**
 1. **Impostazioni → Marketplace** (o HACS) → ⋮ → **Repository personalizzati** → incolla
    `https://github.com/domotica-lab/risco-plus`, tipo **Integrazione** → Aggiungi.
-2. Cerca **Risco Plus** in HACS → **Scarica**.
+2. Cerca **Risco Plus** → **Scarica**.
 3. Riavvia Home Assistant.
 
 **A mano:** copia la cartella `custom_components/risco_plus` in
