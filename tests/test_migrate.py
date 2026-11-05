@@ -122,3 +122,24 @@ async def test_card_is_served(hass: HomeAssistant, hass_client) -> None:
     assert "risco-plus-card" in await response.text()
     urls = hass.data[DATA_EXTRA_MODULE_URL].urls
     assert any(url.startswith("/risco_plus/risco-plus-card.js?v=") for url in urls)
+
+
+async def test_card_added_when_frontend_starts_later(hass: HomeAssistant) -> None:
+    """If the frontend is not ready yet, the card is added once Home Assistant has started."""
+    from homeassistant.components.frontend import DATA_EXTRA_MODULE_URL, UrlManager
+    from homeassistant.const import EVENT_HOMEASSISTANT_STARTED
+    from homeassistant.core import CoreState
+    from homeassistant.setup import async_setup_component
+
+    hass.set_state(CoreState.not_running)
+    assert await async_setup_component(hass, "http", {})
+    assert await async_setup_component(hass, DOMAIN, {})
+    assert DATA_EXTRA_MODULE_URL not in hass.data
+
+    # the frontend comes up, then Home Assistant finishes starting
+    hass.data[DATA_EXTRA_MODULE_URL] = UrlManager(lambda *args: None, [])
+    hass.set_state(CoreState.running)
+    hass.bus.async_fire(EVENT_HOMEASSISTANT_STARTED)
+    await hass.async_block_till_done()
+    urls = hass.data[DATA_EXTRA_MODULE_URL].urls
+    assert [u for u in urls if u.startswith("/risco_plus/risco-plus-card.js?v=")]

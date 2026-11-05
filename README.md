@@ -130,7 +130,10 @@ Se è attivo "Richiedi il codice per inserire", aggiungi `code: "il tuo codice"`
 
 ## Scheda per la plancia
 
-La scheda è inclusa nell'integrazione e si carica da sola. Aggiungila a una plancia (vedi
+La scheda è inclusa nell'integrazione e si carica da sola (dopo aver aggiunto l'integrazione,
+ricarica la pagina con Ctrl+F5). Se compare "Custom element doesn't exist: risco-plus-card",
+aggiungila a mano: Impostazioni → Plance → ⋮ → Risorse → Aggiungi risorsa →
+`/risco_plus/risco-plus-card.js`, tipo **Modulo JavaScript**. Aggiungila a una plancia (vedi
 `esempi/scheda.yaml`):
 ```yaml
 type: custom:risco-plus-card
@@ -169,7 +172,7 @@ I test sono quelli dell'integrazione di serie (adattati) più quelli delle funzi
 pip install pytest-homeassistant-custom-component "pyrisco>=0.8.1"
 pytest
 ```
-Provati con Home Assistant 2026.2.3 e Python 3.13 (ambiente di test disponibile): 61 test
+Provati con Home Assistant 2026.2.3 e Python 3.13 (ambiente di test disponibile): 62 test
 superati. Su un Home Assistant 2026.10 reale la prova va fatta installando l'integrazione.
 
 ## Icona

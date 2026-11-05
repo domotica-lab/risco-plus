@@ -25,11 +25,12 @@ from homeassistant.const import (
     CONF_USERNAME,
     Platform,
 )
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.dispatcher import async_dispatcher_send
+from homeassistant.helpers.start import async_at_started
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.loader import async_get_integration
 
@@ -240,9 +241,28 @@ async def _async_register_card(hass: HomeAssistant) -> None:
         await hass.http.async_register_static_paths(
             [StaticPathConfig(CARD_URL, str(CARD_PATH), True)]
         )
-        if DATA_EXTRA_MODULE_URL in hass.data:
-            add_extra_js_url(hass, f"{CARD_URL}?v={version}")
-        else:
-            _LOGGER.info("Frontend not loaded: add %s as a dashboard resource", CARD_URL)
+        url = f"{CARD_URL}?v={version}"
+
+        @callback
+        def _add_card(_hass: HomeAssistant | None = None) -> bool:
+            """Add the card to the dashboards once the frontend is ready."""
+            if DATA_EXTRA_MODULE_URL not in hass.data:
+                return False
+            if url not in getattr(hass.data[DATA_EXTRA_MODULE_URL], "urls", []):
+                add_extra_js_url(hass, url)
+            return True
+
+        @callback
+        def _add_card_when_started(_hass: HomeAssistant) -> None:
+            if not _add_card():
+                _LOGGER.warning(
+                    "Risco Plus card not added automatically: add %s as a "
+                    "dashboard resource (JavaScript module)",
+                    CARD_URL,
+                )
+
+        # the frontend may start after Risco Plus: try again when Home Assistant is up
+        if not _add_card():
+            async_at_started(hass, _add_card_when_started)
     except Exception:  # never block the alarm because of the card
         _LOGGER.exception("Could not load the Risco Plus card")

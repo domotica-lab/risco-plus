@@ -60,7 +60,7 @@ opzioni sono ancora lette. Manifest: `version` 1.0.0 (semver), `codeowners`/`doc
   ORIGINALE di HA (`loadCardHelpers().showEnterCodeDialog`); il tastierino interno e' solo
   riserva: non ridisegnarlo a mano, deve restare identico all'originale.
 - `tests/` - test core adattati + `test_plus.py`. `tests/shim/probatio.py` si usa solo se
-  `probatio` manca (ambienti HA < 2026.10). Eseguire: `pytest` (61 test).
+  `probatio` manca (ambienti HA < 2026.10). Eseguire: `pytest` (62 test).
 - `esempi/` - scheda e automazione di controllo (attributo `armed_groups`).
 
 ## Cose imparate sul campo (centrale LightSYS 2 con modulo IP RW132IP del 2013)
