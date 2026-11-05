@@ -8,7 +8,7 @@ ID o IP di impianti reali: il progetto e' pensato per essere condiviso.
 Integrazione **separata** `risco_plus` (da pubblicare su GitHub/HACS), nata dalla copia
 dell'integrazione core `risco` di **HA 2026.10.2** (`pyrisco==0.8.1`) con funzioni aggiuntive,
 tutte opzionali. Fino alla 2026.10.2.4 era un override del dominio `risco`: le vecchie
-opzioni sono ancora lette. Manifest: `version` 1.0.0 (semver), `codeowners`/`documentation`/
+opzioni sono ancora lette. Manifest: `version` semver (oggi 1.0.2), `codeowners`/`documentation`/
 `issue_tracker` con l'utente GitHub `domotica-lab`.
 - `migrate.py` + passo `migrate` del config flow: copia dati/opzioni di una entry `risco`
   (`CONF_MIGRATED_FROM` nei data), al primo avvio disattiva la vecchia entry e sposta
@@ -19,6 +19,10 @@ opzioni sono ancora lette. Manifest: `version` 1.0.0 (semver), `codeowners`/`doc
   (o `risco` per le vecchie installazioni).
 - Valori dei gruppi nei selettori in minuscolo ("bc", per hassfest), salvati in maiuscolo.
 - `.github/workflows/validate.yml`: HACS action, hassfest, pytest.
+- `.github/workflows/release.yml`: dopo un "Validate" verde su `main`, se la `version` del
+  manifest non ha ancora il tag, crea tag `v<version>` e release con l'elenco dei commit
+  dall'ultimo tag. **Per pubblicare basta aumentare `version` nel manifest** (semver):
+  la sessione di Claude non puo' creare release da se'.
 
 ## Struttura
 - `custom_components/risco_plus/` - integrazione. File cambiati rispetto al core:

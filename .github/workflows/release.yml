@@ -1,0 +1,65 @@
+name: Release
+
+# Creates the tag and the GitHub release by itself when the version in
+# manifest.json changes, but only after the "Validate" checks are green.
+
+on:
+  workflow_run:
+    workflows: ["Validate"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Read the version
+        id: version
+        run: |
+          version=$(jq -r .version custom_components/risco_plus/manifest.json)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "Release v$version already exists: nothing to do"
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Write the list of changes
+        if: steps.version.outputs.new == 'true'
+        run: |
+          previous=$(git describe --tags --abbrev=0 2>/dev/null || true)
+          {
+            echo "## Modifiche / Changes"
+            echo
+            if [ -n "$previous" ]; then
+              git log "$previous..HEAD" --no-merges --format='- %s'
+              echo
+              echo "**Tutte le modifiche / Full changelog:** https://github.com/${{ github.repository }}/compare/$previous...v${{ steps.version.outputs.version }}"
+            else
+              git log --no-merges --format='- %s'
+            fi
+          } > notes.md
+          cat notes.md
+
+      - name: Create tag and release
+        if: steps.version.outputs.new == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.version.outputs.version }}" \
+            --target "${{ github.event.workflow_run.head_sha }}" \
+            --title "Risco Plus ${{ steps.version.outputs.version }}" \
+            --notes-file notes.md \
+            --latest
