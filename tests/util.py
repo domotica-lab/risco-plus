@@ -30,7 +30,9 @@ def system_mock():
 
 def device_by_identifier(registry, identifier):
     """Find a device by identifier on old and new Home Assistant versions."""
-    for device in registry.devices.values():
+    for item in registry.devices:
+        # new versions yield device entries, old ones yield device ids
+        device = item if hasattr(item, "identifiers") else registry.devices[item]
         if identifier in device.identifiers:
             return device
     return None
