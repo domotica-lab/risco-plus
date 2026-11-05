@@ -166,7 +166,7 @@ Esempio pronto: `esempi/automazione-zone-aperte.yaml`.
 
 I test sono quelli dell'integrazione di serie (adattati) più quelli delle funzioni nuove.
 ```bash
-pip install pytest-homeassistant-custom-component pyrisco==0.8.1
+pip install pytest-homeassistant-custom-component "pyrisco>=0.8.1"
 pytest
 ```
 Provati con Home Assistant 2026.2.3 e Python 3.13 (ambiente di test disponibile): 61 test

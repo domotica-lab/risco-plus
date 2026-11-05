@@ -26,7 +26,7 @@ from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.entity_component import async_update_entity
 
-from .util import TEST_SITE_UUID
+from .util import TEST_SITE_UUID, device_by_identifier
 
 FIRST_CLOUD_ENTITY_ID = "alarm_control_panel.risco_test_site_name_partition_0"
 SECOND_CLOUD_ENTITY_ID = "alarm_control_panel.risco_test_site_name_partition_1"
@@ -163,11 +163,11 @@ async def test_cloud_setup(
     assert entity_registry.async_is_registered(FIRST_CLOUD_ENTITY_ID)
     assert entity_registry.async_is_registered(SECOND_CLOUD_ENTITY_ID)
 
-    device = device_registry.async_get_device(identifiers={(DOMAIN, TEST_SITE_UUID + "_0")})
+    device = device_by_identifier(device_registry, (DOMAIN, TEST_SITE_UUID + "_0"))
     assert device is not None
     assert device.manufacturer == "Risco"
 
-    device = device_registry.async_get_device(identifiers={(DOMAIN, TEST_SITE_UUID + "_1")})
+    device = device_by_identifier(device_registry, (DOMAIN, TEST_SITE_UUID + "_1"))
     assert device is not None
     assert device.manufacturer == "Risco"
 
@@ -585,11 +585,11 @@ async def test_local_setup(
     assert entity_registry.async_is_registered(FIRST_LOCAL_ENTITY_ID)
     assert entity_registry.async_is_registered(SECOND_LOCAL_ENTITY_ID)
 
-    device = device_registry.async_get_device(identifiers={(DOMAIN, TEST_SITE_UUID + "_0_local")})
+    device = device_by_identifier(device_registry, (DOMAIN, TEST_SITE_UUID + "_0_local"))
     assert device is not None
     assert device.manufacturer == "Risco"
 
-    device = device_registry.async_get_device(identifiers={(DOMAIN, TEST_SITE_UUID + "_1_local")})
+    device = device_by_identifier(device_registry, (DOMAIN, TEST_SITE_UUID + "_1_local"))
     assert device is not None
     assert device.manufacturer == "Risco"
     with patch("custom_components.risco_plus.RiscoLocal.disconnect") as mock_close:

@@ -12,6 +12,7 @@ from custom_components.risco_plus.const import CONF_MIGRATED_FROM, DOMAIN
 from custom_components.risco_plus.migrate import async_migrate_from_core
 
 from .conftest import TEST_CLOUD_CONFIG
+from .util import device_by_identifier
 
 OLD_OPTIONS = {"code_disarm_required": True, "custom_code": "2468"}
 
@@ -97,7 +98,7 @@ async def test_entities_keep_their_ids(hass: HomeAssistant) -> None:
         entities.async_get_entity_id("binary_sensor", DOMAIN, "uuid_zone_1")
     )
     assert zone_new.disabled_by is er.RegistryEntryDisabler.USER
-    new_device = devices.async_get_device(identifiers={(DOMAIN, "uuid_0")})
+    new_device = device_by_identifier(devices, (DOMAIN, "uuid_0"))
     assert new_device.area_id == "soggiorno"
     assert new_device.name_by_user == "Allarme"
 

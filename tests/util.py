@@ -26,3 +26,11 @@ def system_mock():
         box_tamper=False,
         programming_mode=False,
     )
+
+
+def device_by_identifier(registry, identifier):
+    """Find a device by identifier on old and new Home Assistant versions."""
+    for device in registry.devices.values():
+        if identifier in device.identifiers:
+            return device
+    return None
