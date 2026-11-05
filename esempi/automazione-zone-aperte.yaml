@@ -1,0 +1,22 @@
+alias: Allarme - avviso zone aperte
+description: >-
+  Notifica sul telefono quando Risco Plus non inserisce l'allarme perche' ci sono
+  zone aperte, oppure quando le esclude prima di inserire.
+  Sostituisci notify.notify con il tuo telefono (es. notify.mobile_app_telefono).
+mode: queued
+triggers:
+  - trigger: event
+    event_type: risco_arming_refused
+    id: rifiutato
+  - trigger: event
+    event_type: risco_zones_bypassed
+    id: escluse
+actions:
+  - action: notify.notify
+    data:
+      title: >-
+        {{ 'Allarme NON inserito' if trigger.id == 'rifiutato'
+           else 'Allarme inserito escludendo zone' }}
+      message: >-
+        {{ 'Zone aperte' if trigger.id == 'rifiutato' else 'Zone escluse' }}:
+        {{ trigger.event.data.zones | join(', ') }}

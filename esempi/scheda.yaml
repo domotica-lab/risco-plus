@@ -1,0 +1,9 @@
+# Scheda allarme (copia in una plancia, sostituendo l'entita')
+type: custom:risco-plus-card
+entity: alarm_control_panel.allarme
+# facoltativi:
+# name: Allarme
+# icon_navigation: "#sensori"   # tocco sullo scudo: apre un popup o una pagina
+# labels:
+#   A: Primo piano
+#   B: Balconi

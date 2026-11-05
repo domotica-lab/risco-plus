@@ -1,0 +1,25 @@
+{
+  "services": {
+    "set_time": {
+      "service": "mdi:clock-edit"
+    },
+    "arm_groups": {
+      "service": "mdi:shield-plus"
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "group_armed": {
+        "default": "mdi:shield-off-outline",
+        "state": {
+          "on": "mdi:shield-check"
+        }
+      }
+    },
+    "button": {
+      "arm_group": {
+        "default": "mdi:shield-plus"
+      }
+    }
+  }
+}

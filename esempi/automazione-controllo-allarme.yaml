@@ -1,0 +1,43 @@
+alias: Controllo allarme Risco
+description: >-
+  Avvisa se l'allarme non risponde o se l'integrazione Risco Plus non e' attiva
+  (per esempio dopo un aggiornamento di Home Assistant).
+  Sostituisci l'entita' con la tua.
+mode: single
+triggers:
+  - trigger: homeassistant
+    event: start
+  - trigger: state
+    entity_id: alarm_control_panel.allarme
+    to: unavailable
+    for:
+      minutes: 10
+actions:
+  - delay:
+      minutes: 3
+  - variables:
+      ent: alarm_control_panel.allarme
+      stato: "{{ states(ent) }}"
+      plus_attiva: "{{ state_attr(ent, 'armed_groups') is not none }}"
+  - if:
+      - condition: template
+        value_template: "{{ stato in ['unavailable', 'unknown'] or not plus_attiva }}"
+    then:
+      - variables:
+          testo: >-
+            {% if stato in ['unavailable', 'unknown'] %}
+            L'allarme non risponde in Home Assistant (stato: {{ stato }}).
+            {% else %}
+            L'integrazione Risco Plus non e' attiva: l'inserimento a gruppi
+            non funziona. Totale e Disinserisci funzionano ancora.
+            {% endif %}
+      - action: persistent_notification.create
+        data:
+          notification_id: controllo_allarme
+          title: Allarme Risco da controllare
+          message: "{{ testo }}"
+      - action: notify.notify
+        continue_on_error: true
+        data:
+          title: Allarme Risco da controllare
+          message: "{{ testo }}"

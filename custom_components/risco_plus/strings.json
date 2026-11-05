@@ -1,0 +1,251 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
+      "reauth_successful": "[%key:common::config_flow::abort::reauth_successful%]",
+      "nothing_to_migrate": "There is no standard Risco integration to copy from."
+    },
+    "error": {
+      "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+      "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+      "unknown": "[%key:common::config_flow::error::unknown%]"
+    },
+    "step": {
+      "cloud": {
+        "data": {
+          "password": "[%key:common::config_flow::data::password%]",
+          "pin": "[%key:common::config_flow::data::pin%]",
+          "username": "[%key:common::config_flow::data::username%]"
+        }
+      },
+      "local": {
+        "data": {
+          "host": "[%key:common::config_flow::data::host%]",
+          "pin": "[%key:common::config_flow::data::pin%]",
+          "port": "[%key:common::config_flow::data::port%]"
+        }
+      },
+      "user": {
+        "menu_options": {
+          "migrate": "Copy from the standard Risco integration (recommended)",
+          "cloud": "Risco Cloud (recommended)",
+          "local": "Local Risco Panel"
+        }
+      },
+      "migrate": {
+        "title": "Copy from Risco",
+        "description": "Account and options are copied. At the first start the standard Risco integration is disabled (not deleted) and Risco Plus keeps the same entity names, so dashboards and automations keep working. You can delete the old integration afterwards.",
+        "data": {
+          "entry": "System"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "ac_trouble": {
+        "name": "A/C trouble"
+      },
+      "alarmed": {
+        "name": "Alarmed"
+      },
+      "armed": {
+        "name": "Armed"
+      },
+      "box_tamper": {
+        "name": "Box tamper"
+      },
+      "clock_trouble": {
+        "name": "Clock trouble"
+      },
+      "low_battery_trouble": {
+        "name": "Low battery trouble"
+      },
+      "monitoring_station_1_trouble": {
+        "name": "Monitoring station 1 trouble"
+      },
+      "monitoring_station_2_trouble": {
+        "name": "Monitoring station 2 trouble"
+      },
+      "monitoring_station_3_trouble": {
+        "name": "Monitoring station 3 trouble"
+      },
+      "phone_line_trouble": {
+        "name": "Phone line trouble"
+      },
+      "group_armed": {
+        "name": "Group {group} armed"
+      }
+    },
+    "switch": {
+      "bypassed": {
+        "name": "Bypassed"
+      }
+    },
+    "button": {
+      "arm_group": {
+        "name": "Arm group {group}"
+      }
+    }
+  },
+  "exceptions": {
+    "not_local_entry": {
+      "message": "This service only works with local Risco connections."
+    },
+    "open_zones": {
+      "message": "Not armed: open zones: {zones}"
+    },
+    "panel_busy": {
+      "message": "The panel is busy (Risco Cloud result 52): try again in a few seconds"
+    },
+    "invalid_code": {
+      "message": "Wrong code: the alarm was not changed"
+    }
+  },
+  "options": {
+    "step": {
+      "ha_to_risco": {
+        "data": {
+          "armed_away": "[%key:component::alarm_control_panel::entity_component::_::state::armed_away%]",
+          "armed_custom_bypass": "[%key:component::alarm_control_panel::entity_component::_::state::armed_custom_bypass%]",
+          "armed_home": "[%key:component::alarm_control_panel::entity_component::_::state::armed_home%]",
+          "armed_night": "[%key:component::alarm_control_panel::entity_component::_::state::armed_night%]"
+        },
+        "description": "Choose what each Home Assistant mode arms on the Risco panel: full, partial, one group or several groups together (e.g. Night = groups B + C).",
+        "title": "Home Assistant modes → Risco"
+      },
+      "init": {
+        "data": {
+          "code_arm_required": "Require PIN to arm",
+          "code_disarm_required": "Require PIN to disarm"
+        },
+        "sections": {
+          "more_options": {
+            "data": {
+              "concurrency": "Maximum concurrent requests in Risco local",
+              "scan_interval": "How often to poll Risco Cloud (in seconds)"
+            },
+            "name": "More options"
+          },
+          "extra_options": {
+            "name": "Risco Plus",
+            "description": "Extra functions. Leave empty to keep the standard behaviour.",
+            "data": {
+              "custom_code": "Code for arming/disarming from Home Assistant",
+              "group_names": "Group names (one line per group, e.g. \"B: Balconies\")",
+              "group_entities": "Create an entity for every group (armed sensor and arm button)",
+              "open_zones_mode": "When zones are open at arming",
+              "perimeter_zones": "Zones chosen",
+              "read_from_cloud_cache": "Read state from the Risco Cloud copy (for old IP modules)"
+            },
+            "data_description": {
+              "custom_code": "If set, only this code works (instead of the integration PIN) and it is always required to disarm.",
+              "group_names": "Shown on the card and in the group entities. Groups without a name keep their letter.",
+              "group_entities": "For each partition: \"Group B armed\" sensors and \"Arm group B\" buttons, handy for automations and voice assistants.",
+              "open_zones_mode": "What to do when a zone is open while arming from Home Assistant (card, alarm panel, automations, voice).",
+              "perimeter_zones": "Used only by the last two choices above. Not needed for \"Don't arm and notify, if a zone of the groups...\": every zone is checked.",
+              "read_from_cloud_cache": "Home Assistant stops querying the panel on every update. Use it if the iRISCO app shows connection errors while Home Assistant is running."
+            }
+          },
+          "zone_groups_section": {
+            "name": "Zones of each group",
+            "description": "With Risco Cloud the panel usually doesn't say which groups a zone belongs to: choose them here so only the zones of the groups being armed are checked. A zone not listed counts for every group. Not needed with the local connection.",
+            "data": {
+              "zones_group_a": "Zones of group A",
+              "zones_group_b": "Zones of group B",
+              "zones_group_c": "Zones of group C",
+              "zones_group_d": "Zones of group D",
+              "zone_groups": "Zones of each group, as text (older way)"
+            },
+            "data_description": {
+              "zone_groups": "One line per zone, e.g. \"Kitchen window: BC\". The lists above are easier."
+            }
+          }
+        },
+        "title": "Configure options"
+      },
+      "risco_to_ha": {
+        "data": {
+          "A": "Group A",
+          "B": "Group B",
+          "C": "Group C",
+          "D": "Group D",
+          "arm": "Armed (AWAY)",
+          "partial_arm": "Partially Armed (STAY)"
+        },
+        "description": "Choose which state Home Assistant shows for each state reported by the Risco panel. When several groups are armed, a mode mapped to exactly those groups (next step) is shown instead.",
+        "title": "Risco states → Home Assistant states"
+      }
+    }
+  },
+  "services": {
+    "set_time": {
+      "description": "Sets the time of an alarm panel.",
+      "fields": {
+        "config_entry_id": {
+          "description": "The Risco alarm panel to set the time for.",
+          "name": "Config entry"
+        },
+        "time": {
+          "description": "The time to send to the alarm panel. Leave it empty to use the Home Assistant system time.",
+          "name": "Time"
+        }
+      },
+      "name": "Set the alarm panel time"
+    },
+    "arm_groups": {
+      "name": "Arm groups",
+      "description": "Arms one or more Risco groups at once.",
+      "fields": {
+        "groups": {
+          "name": "Groups",
+          "description": "The groups to arm (A, B, C, D)."
+        },
+        "code": {
+          "name": "Code",
+          "description": "Needed only if \"Require PIN to arm\" is enabled."
+        }
+      }
+    }
+  },
+  "selector": {
+    "ha_state": {
+      "options": {
+        "armed_away": "Armed away",
+        "armed_home": "Armed home",
+        "armed_night": "Armed night",
+        "armed_custom_bypass": "Armed custom bypass"
+      }
+    },
+    "risco_state": {
+      "options": {
+        "none": "Not used",
+        "arm": "Full arm",
+        "partial_arm": "Partial arm",
+        "a": "Group A",
+        "b": "Group B",
+        "c": "Group C",
+        "d": "Group D",
+        "ab": "Groups A + B",
+        "ac": "Groups A + C",
+        "ad": "Groups A + D",
+        "bc": "Groups B + C",
+        "bd": "Groups B + D",
+        "cd": "Groups C + D",
+        "abc": "Groups A + B + C",
+        "abd": "Groups A + B + D",
+        "acd": "Groups A + C + D",
+        "bcd": "Groups B + C + D",
+        "abcd": "Groups A + B + C + D"
+      }
+    },
+    "open_zones_mode": {
+      "options": {
+        "off": "Don't check (like the standard integration)",
+        "block": "Don't arm and notify, if a zone of the groups being armed is open",
+        "block_selected": "Don't arm and notify, only for the zones chosen below",
+        "bypass": "Bypass the open zones and arm (the zones chosen below still block)"
+      }
+    }
+  }
+}

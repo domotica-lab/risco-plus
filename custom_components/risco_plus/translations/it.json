@@ -1,0 +1,251 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Il dispositivo è già configurato",
+      "reauth_successful": "Nuova autenticazione riuscita",
+      "nothing_to_migrate": "Non c'è un'integrazione Risco di serie da copiare."
+    },
+    "error": {
+      "cannot_connect": "Impossibile connettersi",
+      "invalid_auth": "Autenticazione non valida",
+      "unknown": "Errore imprevisto"
+    },
+    "step": {
+      "cloud": {
+        "data": {
+          "password": "Password",
+          "pin": "Codice PIN",
+          "username": "Nome utente"
+        }
+      },
+      "local": {
+        "data": {
+          "host": "Host",
+          "pin": "Codice PIN",
+          "port": "Porta"
+        }
+      },
+      "user": {
+        "menu_options": {
+          "migrate": "Copia dall'integrazione Risco di serie (consigliato)",
+          "cloud": "Risco Cloud (consigliato)",
+          "local": "Centrale Risco locale"
+        }
+      },
+      "migrate": {
+        "title": "Copia da Risco",
+        "description": "Vengono copiati account e opzioni. Al primo avvio l'integrazione Risco di serie viene disattivata (non cancellata) e Risco Plus mantiene gli stessi nomi delle entità: plance e automazioni continuano a funzionare. Dopo puoi eliminare la vecchia integrazione.",
+        "data": {
+          "entry": "Impianto"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "ac_trouble": {
+        "name": "Guasto alimentazione"
+      },
+      "alarmed": {
+        "name": "In allarme"
+      },
+      "armed": {
+        "name": "Inserito"
+      },
+      "box_tamper": {
+        "name": "Manomissione contenitore"
+      },
+      "clock_trouble": {
+        "name": "Guasto orologio"
+      },
+      "low_battery_trouble": {
+        "name": "Batteria scarica"
+      },
+      "monitoring_station_1_trouble": {
+        "name": "Guasto vigilanza 1"
+      },
+      "monitoring_station_2_trouble": {
+        "name": "Guasto vigilanza 2"
+      },
+      "monitoring_station_3_trouble": {
+        "name": "Guasto vigilanza 3"
+      },
+      "phone_line_trouble": {
+        "name": "Guasto linea telefonica"
+      },
+      "group_armed": {
+        "name": "Gruppo {group} inserito"
+      }
+    },
+    "switch": {
+      "bypassed": {
+        "name": "Esclusa"
+      }
+    },
+    "button": {
+      "arm_group": {
+        "name": "Inserisci gruppo {group}"
+      }
+    }
+  },
+  "exceptions": {
+    "not_local_entry": {
+      "message": "Questa azione funziona solo con le connessioni Risco locali."
+    },
+    "open_zones": {
+      "message": "Non inserito: zone aperte: {zones}"
+    },
+    "panel_busy": {
+      "message": "La centrale è occupata (Risco Cloud, codice 52): riprova tra qualche secondo"
+    },
+    "invalid_code": {
+      "message": "Codice errato: l'allarme non è stato modificato"
+    }
+  },
+  "options": {
+    "step": {
+      "ha_to_risco": {
+        "data": {
+          "armed_away": "Attivo fuori casa",
+          "armed_custom_bypass": "Attivo con esclusione personalizzata",
+          "armed_home": "Attivo in casa",
+          "armed_night": "Attivo notte"
+        },
+        "description": "Scegli cosa inserisce sulla centrale Risco ogni modalità di Home Assistant: totale, parziale, un gruppo o più gruppi insieme (es. Notte = gruppi B + C).",
+        "title": "Modalità di Home Assistant → Risco"
+      },
+      "init": {
+        "data": {
+          "code_arm_required": "Richiedi il codice per inserire",
+          "code_disarm_required": "Richiedi il codice per disinserire"
+        },
+        "sections": {
+          "more_options": {
+            "name": "Altre opzioni",
+            "data": {
+              "concurrency": "Richieste contemporanee massime (Risco locale)",
+              "scan_interval": "Ogni quanto interrogare Risco Cloud (secondi)"
+            }
+          },
+          "extra_options": {
+            "name": "Risco Plus",
+            "description": "Funzioni aggiuntive. Lasciale vuote per il comportamento standard.",
+            "data": {
+              "custom_code": "Codice per inserire/disinserire da Home Assistant",
+              "group_names": "Nomi dei gruppi (una riga per gruppo, es. \"B: Balconi\")",
+              "group_entities": "Crea un'entità per ogni gruppo (sensore inserito e pulsante inserisci)",
+              "open_zones_mode": "Con zone aperte all'inserimento",
+              "perimeter_zones": "Zone scelte",
+              "read_from_cloud_cache": "Leggi lo stato dalla copia di Risco Cloud (per moduli IP vecchi)"
+            },
+            "data_description": {
+              "custom_code": "Se compilato, vale solo questo codice (al posto del PIN dell'integrazione) e viene sempre chiesto per disinserire.",
+              "group_names": "Compaiono nella scheda e nelle entità dei gruppi. I gruppi senza nome restano con la lettera.",
+              "group_entities": "Per ogni partizione: sensori \"Gruppo B inserito\" e pulsanti \"Inserisci gruppo B\", comodi per automazioni e assistenti vocali.",
+              "open_zones_mode": "Cosa fare se una zona è aperta quando si inserisce da Home Assistant (scheda, pannello allarme, automazioni, voce).",
+              "perimeter_zones": "Servono solo per le ultime due scelte qui sopra. Con \"Non inserire e avvisa, se è aperta una zona dei gruppi\" non serve sceglierle: vengono controllate tutte.",
+              "read_from_cloud_cache": "Home Assistant smette di interrogare la centrale a ogni aggiornamento. Usalo se l'app iRISCO dà errori di connessione mentre Home Assistant è acceso."
+            }
+          },
+          "zone_groups_section": {
+            "name": "Zone dei gruppi",
+            "description": "Con Risco Cloud la centrale di solito non comunica a quali gruppi appartiene una zona: sceglile qui, così vengono controllate solo le zone dei gruppi che stai inserendo. Una zona non elencata vale per tutti i gruppi. Con il collegamento locale non serve.",
+            "data": {
+              "zones_group_a": "Zone del gruppo A",
+              "zones_group_b": "Zone del gruppo B",
+              "zones_group_c": "Zone del gruppo C",
+              "zones_group_d": "Zone del gruppo D",
+              "zone_groups": "Zone dei gruppi come testo (vecchio modo)"
+            },
+            "data_description": {
+              "zone_groups": "Una riga per zona, es. \"Finestra cucina: BC\". Gli elenchi qui sopra sono più comodi."
+            }
+          }
+        },
+        "title": "Configura le opzioni"
+      },
+      "risco_to_ha": {
+        "data": {
+          "A": "Gruppo A",
+          "B": "Gruppo B",
+          "C": "Gruppo C",
+          "D": "Gruppo D",
+          "arm": "Inserito (totale)",
+          "partial_arm": "Inserito parziale"
+        },
+        "description": "Scegli quale stato mostra Home Assistant per ogni stato comunicato dalla centrale Risco. Se sono inseriti più gruppi e una modalità del passo successivo corrisponde esattamente a quei gruppi, viene mostrata quella.",
+        "title": "Stati Risco → stati di Home Assistant"
+      }
+    }
+  },
+  "services": {
+    "set_time": {
+      "name": "Imposta l'ora della centrale",
+      "description": "Imposta l'ora di una centrale.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Voce di configurazione",
+          "description": "La centrale Risco di cui impostare l'ora."
+        },
+        "time": {
+          "name": "Ora",
+          "description": "L'ora da inviare. Lascia vuoto per usare l'ora di Home Assistant."
+        }
+      }
+    },
+    "arm_groups": {
+      "name": "Inserisci gruppi",
+      "description": "Inserisce uno o più gruppi Risco insieme.",
+      "fields": {
+        "groups": {
+          "name": "Gruppi",
+          "description": "I gruppi da inserire (A, B, C, D)."
+        },
+        "code": {
+          "name": "Codice",
+          "description": "Serve solo se è attivo \"Richiedi il codice per inserire\"."
+        }
+      }
+    }
+  },
+  "selector": {
+    "ha_state": {
+      "options": {
+        "armed_away": "Attivo fuori casa",
+        "armed_home": "Attivo in casa",
+        "armed_night": "Attivo notte",
+        "armed_custom_bypass": "Attivo con esclusione personalizzata"
+      }
+    },
+    "risco_state": {
+      "options": {
+        "none": "Non usato",
+        "arm": "Totale",
+        "partial_arm": "Parziale",
+        "a": "Gruppo A",
+        "b": "Gruppo B",
+        "c": "Gruppo C",
+        "d": "Gruppo D",
+        "ab": "Gruppi A + B",
+        "ac": "Gruppi A + C",
+        "ad": "Gruppi A + D",
+        "bc": "Gruppi B + C",
+        "bd": "Gruppi B + D",
+        "cd": "Gruppi C + D",
+        "abc": "Gruppi A + B + C",
+        "abd": "Gruppi A + B + D",
+        "acd": "Gruppi A + C + D",
+        "bcd": "Gruppi B + C + D",
+        "abcd": "Gruppi A + B + C + D"
+      }
+    },
+    "open_zones_mode": {
+      "options": {
+        "off": "Non controllare (come l'integrazione di serie)",
+        "block": "Non inserire e avvisa, se è aperta una zona dei gruppi da inserire",
+        "block_selected": "Non inserire e avvisa, solo per le zone scelte sotto",
+        "bypass": "Escludi le zone aperte e inserisci (le zone scelte sotto bloccano comunque)"
+      }
+    }
+  }
+}
