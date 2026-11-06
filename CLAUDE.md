@@ -8,7 +8,7 @@ ID o IP di impianti reali: il progetto e' pensato per essere condiviso.
 Integrazione **separata** `risco_plus` (da pubblicare su GitHub/HACS), nata dalla copia
 dell'integrazione core `risco` di **HA 2026.10.2** (`pyrisco==0.8.1`) con funzioni aggiuntive,
 tutte opzionali. Fino alla 2026.10.2.4 era un override del dominio `risco`: le vecchie
-opzioni sono ancora lette. Manifest: `version` semver (oggi 1.0.3), `codeowners`/`documentation`/
+opzioni sono ancora lette. Manifest: `version` semver (oggi 1.0.4), `codeowners`/`documentation`/
 `issue_tracker` con l'utente GitHub `domotica-lab`.
 - `migrate.py` + passo `migrate` del config flow: copia dati/opzioni di una entry `risco`
   (`CONF_MIGRATED_FROM` nei data), al primo avvio disattiva la vecchia entry e sposta

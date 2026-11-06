@@ -175,15 +175,34 @@ class RiscoCasaCard extends HTMLElement {
   _servizio(dominio, servizio, dati) {
     return this._hass
       .callService(dominio, servizio, { entity_id: this._config.entity, ...dati })
-      .catch((err) => {
+      .catch(async (err) => {
         // comando rifiutato: niente attesa, si mostra subito il motivo
         this._attesa = null;
         this._obiettivo = null;
         clearTimeout(this._timerAttesa);
-        // il messaggio arriva gia' tradotto da Home Assistant (es. zone aperte)
-        const testo = (err && err.message) || String(err);
+        const testo = await this._testoErrore(err);
         this._mostra(testo, true, 10000);
       });
+  }
+
+  // Home Assistant manda il testo dell'errore sempre in inglese, insieme alla chiave di
+  // traduzione: la scheda lo traduce nella lingua dell'utente (es. zone aperte)
+  async _testoErrore(err) {
+    const inglese = (err && err.message) || String(err);
+    if (!err || !err.translation_domain || !err.translation_key || !this._hass.loadBackendTranslation) {
+      return inglese;
+    }
+    try {
+      const dominio = err.translation_domain;
+      const localize = await this._hass.loadBackendTranslation("exceptions", dominio);
+      const tradotto = localize(
+        `component.${dominio}.exceptions.${err.translation_key}.message`,
+        err.translation_placeholders || {}
+      );
+      return tradotto || inglese;
+    } catch (e) {
+      return inglese;
+    }
   }
 
   // l'attesa finisce solo quando la centrale ha completato TUTTO il comando
